@@ -1,98 +1,127 @@
-```html id="harry-ready-steady-go"
 <!DOCTYPE html>
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>Ready, Steady, Go — Harry Styles Fan Project</title>
+
+  <title>Ready, Steady, Go — Harry Styles Amsterdam</title>
 
   <style>
+
     *{
       margin:0;
       padding:0;
       box-sizing:border-box;
-      font-family: Arial, Helvetica, sans-serif;
     }
 
     body{
-      background:black;
-      overflow:hidden;
       height:100vh;
+      overflow:hidden;
+      background:
+      radial-gradient(circle at top, #2b1d52 0%, #0d0d0d 45%, #000 100%);
+      font-family: "Trebuchet MS", sans-serif;
       display:flex;
       justify-content:center;
       align-items:center;
-      transition:background 0.2s ease;
-    }
-
-    .container{
-      text-align:center;
       color:white;
-      z-index:2;
-      padding:20px;
+      position:relative;
     }
 
-    h1{
-      font-size:6rem;
-      letter-spacing:10px;
-      text-transform:uppercase;
-      transition:0.2s ease;
+    /* STARS */
+
+    .stars{
+      position:absolute;
+      width:100%;
+      height:100%;
+      overflow:hidden;
+      z-index:1;
     }
 
-    p{
-      margin-top:20px;
-      font-size:1.1rem;
-      opacity:0.7;
+    .star{
+      position:absolute;
+      width:2px;
+      height:2px;
+      background:white;
+      border-radius:50%;
+      animation: twinkle 3s infinite alternate;
     }
+
+    @keyframes twinkle{
+      from{
+        opacity:0.2;
+      }
+      to{
+        opacity:1;
+      }
+    }
+
+    /* GLOW */
 
     .overlay{
       position:fixed;
       inset:0;
-      pointer-events:none;
       opacity:0;
-      transition:opacity 0.15s ease;
+      transition:0.2s ease;
+      pointer-events:none;
+      z-index:2;
+      mix-blend-mode:screen;
     }
 
     .show{
-      opacity:1;
+      opacity:0.55;
     }
 
     .red{
-      background:#ff0000;
+      background:#ff2d55;
     }
 
     .yellow{
-      background:#ffd500;
+      background:#ffd84d;
     }
 
     .green{
-      background:#00ff66;
+      background:#6eff8a;
     }
 
-    button{
-      margin-top:35px;
-      padding:15px 32px;
-      border:none;
-      border-radius:40px;
-      font-size:1rem;
-      cursor:pointer;
-      background:white;
-      color:black;
-      transition:0.2s;
-      font-weight:bold;
+    /* MAIN */
+
+    .container{
+      position:relative;
+      z-index:5;
+      text-align:center;
+      padding:30px;
+      max-width:900px;
     }
 
-    button:hover{
-      transform:scale(1.05);
+    .subtitle{
+      letter-spacing:6px;
+      text-transform:uppercase;
+      font-size:0.8rem;
+      opacity:0.7;
+      margin-bottom:25px;
+    }
+
+    h1{
+      font-size:7rem;
+      letter-spacing:14px;
+      text-transform:uppercase;
+      line-height:1;
+      text-shadow:
+      0 0 20px rgba(255,255,255,0.2),
+      0 0 60px rgba(255,255,255,0.15);
+      transition:0.2s ease;
     }
 
     .countdown{
       position:absolute;
-      font-size:12rem;
+      font-size:13rem;
       font-weight:bold;
       opacity:0;
-      color:white;
-      transition:0.2s ease;
-      pointer-events:none;
+      z-index:20;
+      transition:0.25s ease;
+      text-shadow:
+      0 0 25px white,
+      0 0 60px rgba(255,255,255,0.6);
     }
 
     .countdown.show{
@@ -100,39 +129,142 @@
       transform:scale(1.1);
     }
 
+    .tagline{
+      margin-top:30px;
+      opacity:0.75;
+      font-size:1rem;
+      letter-spacing:2px;
+    }
+
+    button{
+      margin-top:45px;
+      padding:18px 42px;
+      border:none;
+      border-radius:999px;
+      background:white;
+      color:black;
+      font-size:1rem;
+      font-weight:bold;
+      letter-spacing:2px;
+      cursor:pointer;
+      transition:0.25s ease;
+      box-shadow:0 0 25px rgba(255,255,255,0.2);
+    }
+
+    button:hover{
+      transform:scale(1.06);
+      box-shadow:0 0 40px rgba(255,255,255,0.4);
+    }
+
+    .heart{
+      position:absolute;
+      font-size:1.5rem;
+      animation: float 8s linear infinite;
+      opacity:0.5;
+      z-index:1;
+    }
+
+    @keyframes float{
+      from{
+        transform:translateY(110vh);
+      }
+      to{
+        transform:translateY(-120vh);
+      }
+    }
+
     @media(max-width:768px){
+
       h1{
-        font-size:3rem;
+        font-size:3.2rem;
+        letter-spacing:6px;
       }
 
       .countdown{
         font-size:6rem;
       }
+
+      .tagline{
+        font-size:0.9rem;
+      }
+
     }
+
   </style>
 </head>
 <body>
 
+  <!-- STARS -->
+  <div class="stars" id="stars"></div>
+
+  <!-- LIGHT FLASH -->
   <div class="overlay" id="flash"></div>
 
+  <!-- COUNTDOWN -->
   <div class="countdown" id="countdown"></div>
 
+  <!-- FLOATING HEARTS -->
+  <div class="heart" style="left:10%; animation-delay:0s;">♥</div>
+  <div class="heart" style="left:25%; animation-delay:3s;">★</div>
+  <div class="heart" style="left:50%; animation-delay:5s;">♥</div>
+  <div class="heart" style="left:70%; animation-delay:2s;">✦</div>
+  <div class="heart" style="left:85%; animation-delay:6s;">♥</div>
+
+  <!-- MAIN -->
   <div class="container">
-    <h1 id="word">READY</h1>
 
-    <p>
-      Harry Styles Fan Project — Amsterdam
-    </p>
+    <div class="subtitle">
+      Harry Styles Amsterdam Fan Project
+    </div>
 
-    <button onclick="startShow()">
-      Start Countdown
+    <h1 id="word">
+      READY
+    </h1>
+
+    <div class="tagline">
+      “We’re just two ghosts standing in the place of you and me.”
+    </div>
+
+    <button onclick="startProject()">
+      START THE LIGHTS
     </button>
+
   </div>
 
+  <!-- AUDIO -->
+  <audio id="song" src="song.mp3"></audio>
+
   <script>
-    const word = document.getElementById("word");
+
+    // STARS
+
+    const starsContainer = document.getElementById("stars");
+
+    for(let i = 0; i < 120; i++){
+
+      const star = document.createElement("div");
+
+      star.classList.add("star");
+
+      star.style.left = Math.random() * 100 + "%";
+      star.style.top = Math.random() * 100 + "%";
+
+      star.style.animationDelay =
+      Math.random() * 3 + "s";
+
+      star.style.opacity =
+      Math.random();
+
+      starsContainer.appendChild(star);
+
+    }
+
+    // MAIN
+
     const flash = document.getElementById("flash");
     const countdown = document.getElementById("countdown");
+    const word = document.getElementById("word");
+    const song = document.getElementById("song");
 
     let started = false;
 
@@ -140,11 +272,15 @@
 
       word.innerText = text;
 
-      flash.className = "overlay show " + color;
+      flash.className =
+      "overlay show " + color;
+
+      navigator.vibrate?.(180);
 
       setTimeout(() => {
         flash.classList.remove("show");
-      }, 500);
+      }, 550);
+
     }
 
     function showCountdown(number, delay){
@@ -152,50 +288,64 @@
       setTimeout(() => {
 
         countdown.innerText = number;
+
         countdown.classList.add("show");
+
+        navigator.vibrate?.(100);
 
         setTimeout(() => {
           countdown.classList.remove("show");
         }, 700);
 
       }, delay);
+
     }
 
-    function startTrafficLoop(){
+    function trafficLights(){
 
       setInterval(() => {
 
-        // READY = RED
         flashColor("red", "READY");
 
-        // STEADY = YELLOW
         setTimeout(() => {
           flashColor("yellow", "STEADY");
         }, 900);
 
-        // GO = GREEN
         setTimeout(() => {
           flashColor("green", "GO");
         }, 1800);
 
       }, 3000);
+
     }
 
-    function startShow(){
+    function startProject(){
 
       if(started) return;
+
       started = true;
 
-      // Countdown
+      // FULLSCREEN
+
+      document.documentElement.requestFullscreen?.();
+
+      // PLAY MUSIC
+
+      song.play();
+
+      // COUNTDOWN
+
       showCountdown("3", 0);
       showCountdown("2", 1000);
       showCountdown("1", 2000);
 
-      // GO!
       setTimeout(() => {
 
         countdown.innerText = "GO!";
+
         countdown.classList.add("show");
+
+        navigator.vibrate?.([100, 50, 100]);
 
         setTimeout(() => {
           countdown.classList.remove("show");
@@ -203,11 +353,14 @@
 
       }, 3000);
 
-      // Start chorus lights
+      // START LIGHTS
+
       setTimeout(() => {
-        startTrafficLoop();
+        trafficLights();
       }, 4200);
+
     }
+
   </script>
 
 </body>
