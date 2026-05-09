@@ -1,368 +1,183 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>Amsterdam Love on Tour Gallery</title>
 
-  <title>Ready, Steady, Go — Harry Styles Amsterdam</title>
+<style>
+  body {
+    margin: 0;
+    font-family: Arial, sans-serif;
+    background: radial-gradient(circle at top, #111, #000);
+    color: white;
+  }
 
-  <style>
+  header {
+    text-align: center;
+    padding: 50px 20px 20px;
+  }
 
-    *{
-      margin:0;
-      padding:0;
-      box-sizing:border-box;
-    }
+  header h1 {
+    font-size: 42px;
+    margin: 0;
+    letter-spacing: 1px;
+  }
 
-    body{
-      height:100vh;
-      overflow:hidden;
-      background:
-      radial-gradient(circle at top, #2b1d52 0%, #0d0d0d 45%, #000 100%);
-      font-family: "Trebuchet MS", sans-serif;
-      display:flex;
-      justify-content:center;
-      align-items:center;
-      color:white;
-      position:relative;
-    }
+  header p {
+    color: #aaa;
+    margin-top: 10px;
+  }
 
-    /* STARS */
+  .upload {
+    display: flex;
+    justify-content: center;
+    margin: 30px;
+  }
 
-    .stars{
-      position:absolute;
-      width:100%;
-      height:100%;
-      overflow:hidden;
-      z-index:1;
-    }
+  .upload label {
+    background: white;
+    color: black;
+    padding: 12px 22px;
+    border-radius: 999px;
+    cursor: pointer;
+    font-weight: bold;
+    transition: 0.2s;
+  }
 
-    .star{
-      position:absolute;
-      width:2px;
-      height:2px;
-      background:white;
-      border-radius:50%;
-      animation: twinkle 3s infinite alternate;
-    }
+  .upload label:hover {
+    transform: scale(1.05);
+  }
 
-    @keyframes twinkle{
-      from{
-        opacity:0.2;
-      }
-      to{
-        opacity:1;
-      }
-    }
+  input[type="file"] {
+    display: none;
+  }
 
-    /* GLOW */
+  .gallery {
+    column-count: 3;
+    column-gap: 15px;
+    padding: 20px;
+  }
 
-    .overlay{
-      position:fixed;
-      inset:0;
-      opacity:0;
-      transition:0.2s ease;
-      pointer-events:none;
-      z-index:2;
-      mix-blend-mode:screen;
-    }
+  @media (max-width: 900px) {
+    .gallery { column-count: 2; }
+  }
 
-    .show{
-      opacity:0.55;
-    }
+  @media (max-width: 600px) {
+    .gallery { column-count: 1; }
+  }
 
-    .red{
-      background:#ff2d55;
-    }
+  .card {
+    break-inside: avoid;
+    margin-bottom: 15px;
+    background: #111;
+    border-radius: 16px;
+    overflow: hidden;
+    box-shadow: 0 10px 30px rgba(0,0,0,0.4);
+  }
 
-    .yellow{
-      background:#ffd84d;
-    }
+  .card img {
+    width: 100%;
+    display: block;
+  }
 
-    .green{
-      background:#6eff8a;
-    }
+  .card-footer {
+    display: flex;
+    justify-content: space-between;
+    padding: 10px 12px;
+    font-size: 14px;
+    align-items: center;
+  }
 
-    /* MAIN */
+  .like {
+    cursor: pointer;
+    color: #ff4d8d;
+    user-select: none;
+  }
 
-    .container{
-      position:relative;
-      z-index:5;
-      text-align:center;
-      padding:30px;
-      max-width:900px;
-    }
+  .empty {
+    text-align: center;
+    color: #777;
+    margin-top: 40px;
+  }
 
-    .subtitle{
-      letter-spacing:6px;
-      text-transform:uppercase;
-      font-size:0.8rem;
-      opacity:0.7;
-      margin-bottom:25px;
-    }
-
-    h1{
-      font-size:7rem;
-      letter-spacing:14px;
-      text-transform:uppercase;
-      line-height:1;
-      text-shadow:
-      0 0 20px rgba(255,255,255,0.2),
-      0 0 60px rgba(255,255,255,0.15);
-      transition:0.2s ease;
-    }
-
-    .countdown{
-      position:absolute;
-      font-size:13rem;
-      font-weight:bold;
-      opacity:0;
-      z-index:20;
-      transition:0.25s ease;
-      text-shadow:
-      0 0 25px white,
-      0 0 60px rgba(255,255,255,0.6);
-    }
-
-    .countdown.show{
-      opacity:1;
-      transform:scale(1.1);
-    }
-
-    .tagline{
-      margin-top:30px;
-      opacity:0.75;
-      font-size:1rem;
-      letter-spacing:2px;
-    }
-
-    button{
-      margin-top:45px;
-      padding:18px 42px;
-      border:none;
-      border-radius:999px;
-      background:white;
-      color:black;
-      font-size:1rem;
-      font-weight:bold;
-      letter-spacing:2px;
-      cursor:pointer;
-      transition:0.25s ease;
-      box-shadow:0 0 25px rgba(255,255,255,0.2);
-    }
-
-    button:hover{
-      transform:scale(1.06);
-      box-shadow:0 0 40px rgba(255,255,255,0.4);
-    }
-
-    .heart{
-      position:absolute;
-      font-size:1.5rem;
-      animation: float 8s linear infinite;
-      opacity:0.5;
-      z-index:1;
-    }
-
-    @keyframes float{
-      from{
-        transform:translateY(110vh);
-      }
-      to{
-        transform:translateY(-120vh);
-      }
-    }
-
-    @media(max-width:768px){
-
-      h1{
-        font-size:3.2rem;
-        letter-spacing:6px;
-      }
-
-      .countdown{
-        font-size:6rem;
-      }
-
-      .tagline{
-        font-size:0.9rem;
-      }
-
-    }
-
-  </style>
+</style>
 </head>
+
 <body>
 
-  <!-- STARS -->
-  <div class="stars" id="stars"></div>
+<header>
+  <h1>Amsterdam Love on Tour</h1>
+  <p>a dreamy fan gallery of Harry Styles ✨</p>
+</header>
 
-  <!-- LIGHT FLASH -->
-  <div class="overlay" id="flash"></div>
+<div class="upload">
+  <label>
+    Upload your concert photos
+    <input type="file" id="fileInput" multiple accept="image/*">
+  </label>
+</div>
 
-  <!-- COUNTDOWN -->
-  <div class="countdown" id="countdown"></div>
+<div id="empty" class="empty">no memories yet… be the first ✨</div>
+<div class="gallery" id="gallery"></div>
 
-  <!-- FLOATING HEARTS -->
-  <div class="heart" style="left:10%; animation-delay:0s;">♥</div>
-  <div class="heart" style="left:25%; animation-delay:3s;">★</div>
-  <div class="heart" style="left:50%; animation-delay:5s;">♥</div>
-  <div class="heart" style="left:70%; animation-delay:2s;">✦</div>
-  <div class="heart" style="left:85%; animation-delay:6s;">♥</div>
+<script>
+  const fileInput = document.getElementById("fileInput");
+  const gallery = document.getElementById("gallery");
+  const empty = document.getElementById("empty");
 
-  <!-- MAIN -->
-  <div class="container">
+  fileInput.addEventListener("change", (e) => {
+    const files = Array.from(e.target.files);
 
-    <div class="subtitle">
-      Harry Styles Amsterdam Fan Project
-    </div>
+    files.forEach(file => {
+      const reader = new FileReader();
 
-    <h1 id="word">
-      READY
-    </h1>
+      reader.onload = function(event) {
+        createCard(event.target.result);
+      };
 
-    <div class="tagline">
-      “We’re just two ghosts standing in the place of you and me.”
-    </div>
+      reader.readAsDataURL(file);
+    });
 
-    <button onclick="startProject()">
-      START THE LIGHTS
-    </button>
+    empty.style.display = "none";
+  });
 
-  </div>
+  function createCard(src) {
+    const card = document.createElement("div");
+    card.className = "card";
 
-  <!-- AUDIO -->
-  <audio id="song" src="song.mp3"></audio>
+    const img = document.createElement("img");
+    img.src = src;
 
-  <script>
+    const footer = document.createElement("div");
+    footer.className = "card-footer";
 
-    // STARS
+    let likes = 0;
 
-    const starsContainer = document.getElementById("stars");
+    const likeBtn = document.createElement("div");
+    likeBtn.className = "like";
+    likeBtn.innerHTML = `♥ 0`;
 
-    for(let i = 0; i < 120; i++){
+    likeBtn.onclick = () => {
+      likes++;
+      likeBtn.innerHTML = `♥ ${likes}`;
+    };
 
-      const star = document.createElement("div");
+    const tag = document.createElement("div");
+    tag.style.color = "#888";
+    tag.textContent = "Amsterdam ✨";
 
-      star.classList.add("star");
+    footer.appendChild(likeBtn);
+    footer.appendChild(tag);
 
-      star.style.left = Math.random() * 100 + "%";
-      star.style.top = Math.random() * 100 + "%";
+    card.appendChild(img);
+    card.appendChild(footer);
 
-      star.style.animationDelay =
-      Math.random() * 3 + "s";
-
-      star.style.opacity =
-      Math.random();
-
-      starsContainer.appendChild(star);
-
-    }
-
-    // MAIN
-
-    const flash = document.getElementById("flash");
-    const countdown = document.getElementById("countdown");
-    const word = document.getElementById("word");
-    const song = document.getElementById("song");
-
-    let started = false;
-
-    function flashColor(color, text){
-
-      word.innerText = text;
-
-      flash.className =
-      "overlay show " + color;
-
-      navigator.vibrate?.(180);
-
-      setTimeout(() => {
-        flash.classList.remove("show");
-      }, 550);
-
-    }
-
-    function showCountdown(number, delay){
-
-      setTimeout(() => {
-
-        countdown.innerText = number;
-
-        countdown.classList.add("show");
-
-        navigator.vibrate?.(100);
-
-        setTimeout(() => {
-          countdown.classList.remove("show");
-        }, 700);
-
-      }, delay);
-
-    }
-
-    function trafficLights(){
-
-      setInterval(() => {
-
-        flashColor("red", "READY");
-
-        setTimeout(() => {
-          flashColor("yellow", "STEADY");
-        }, 900);
-
-        setTimeout(() => {
-          flashColor("green", "GO");
-        }, 1800);
-
-      }, 3000);
-
-    }
-
-    function startProject(){
-
-      if(started) return;
-
-      started = true;
-
-      // FULLSCREEN
-
-      document.documentElement.requestFullscreen?.();
-
-      // PLAY MUSIC
-
-      song.play();
-
-      // COUNTDOWN
-
-      showCountdown("3", 0);
-      showCountdown("2", 1000);
-      showCountdown("1", 2000);
-
-      setTimeout(() => {
-
-        countdown.innerText = "GO!";
-
-        countdown.classList.add("show");
-
-        navigator.vibrate?.([100, 50, 100]);
-
-        setTimeout(() => {
-          countdown.classList.remove("show");
-        }, 900);
-
-      }, 3000);
-
-      // START LIGHTS
-
-      setTimeout(() => {
-        trafficLights();
-      }, 4200);
-
-    }
-
-  </script>
+    gallery.prepend(card);
+  }
+</script>
 
 </body>
 </html>
+
 
