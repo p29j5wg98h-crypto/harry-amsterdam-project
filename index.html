@@ -1,0 +1,215 @@
+```html id="harry-ready-steady-go"
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Ready, Steady, Go — Harry Styles Fan Project</title>
+
+  <style>
+    *{
+      margin:0;
+      padding:0;
+      box-sizing:border-box;
+      font-family: Arial, Helvetica, sans-serif;
+    }
+
+    body{
+      background:black;
+      overflow:hidden;
+      height:100vh;
+      display:flex;
+      justify-content:center;
+      align-items:center;
+      transition:background 0.2s ease;
+    }
+
+    .container{
+      text-align:center;
+      color:white;
+      z-index:2;
+      padding:20px;
+    }
+
+    h1{
+      font-size:6rem;
+      letter-spacing:10px;
+      text-transform:uppercase;
+      transition:0.2s ease;
+    }
+
+    p{
+      margin-top:20px;
+      font-size:1.1rem;
+      opacity:0.7;
+    }
+
+    .overlay{
+      position:fixed;
+      inset:0;
+      pointer-events:none;
+      opacity:0;
+      transition:opacity 0.15s ease;
+    }
+
+    .show{
+      opacity:1;
+    }
+
+    .red{
+      background:#ff0000;
+    }
+
+    .yellow{
+      background:#ffd500;
+    }
+
+    .green{
+      background:#00ff66;
+    }
+
+    button{
+      margin-top:35px;
+      padding:15px 32px;
+      border:none;
+      border-radius:40px;
+      font-size:1rem;
+      cursor:pointer;
+      background:white;
+      color:black;
+      transition:0.2s;
+      font-weight:bold;
+    }
+
+    button:hover{
+      transform:scale(1.05);
+    }
+
+    .countdown{
+      position:absolute;
+      font-size:12rem;
+      font-weight:bold;
+      opacity:0;
+      color:white;
+      transition:0.2s ease;
+      pointer-events:none;
+    }
+
+    .countdown.show{
+      opacity:1;
+      transform:scale(1.1);
+    }
+
+    @media(max-width:768px){
+      h1{
+        font-size:3rem;
+      }
+
+      .countdown{
+        font-size:6rem;
+      }
+    }
+  </style>
+</head>
+<body>
+
+  <div class="overlay" id="flash"></div>
+
+  <div class="countdown" id="countdown"></div>
+
+  <div class="container">
+    <h1 id="word">READY</h1>
+
+    <p>
+      Harry Styles Fan Project — Amsterdam
+    </p>
+
+    <button onclick="startShow()">
+      Start Countdown
+    </button>
+  </div>
+
+  <script>
+    const word = document.getElementById("word");
+    const flash = document.getElementById("flash");
+    const countdown = document.getElementById("countdown");
+
+    let started = false;
+
+    function flashColor(color, text){
+
+      word.innerText = text;
+
+      flash.className = "overlay show " + color;
+
+      setTimeout(() => {
+        flash.classList.remove("show");
+      }, 500);
+    }
+
+    function showCountdown(number, delay){
+
+      setTimeout(() => {
+
+        countdown.innerText = number;
+        countdown.classList.add("show");
+
+        setTimeout(() => {
+          countdown.classList.remove("show");
+        }, 700);
+
+      }, delay);
+    }
+
+    function startTrafficLoop(){
+
+      setInterval(() => {
+
+        // READY = RED
+        flashColor("red", "READY");
+
+        // STEADY = YELLOW
+        setTimeout(() => {
+          flashColor("yellow", "STEADY");
+        }, 900);
+
+        // GO = GREEN
+        setTimeout(() => {
+          flashColor("green", "GO");
+        }, 1800);
+
+      }, 3000);
+    }
+
+    function startShow(){
+
+      if(started) return;
+      started = true;
+
+      // Countdown
+      showCountdown("3", 0);
+      showCountdown("2", 1000);
+      showCountdown("1", 2000);
+
+      // GO!
+      setTimeout(() => {
+
+        countdown.innerText = "GO!";
+        countdown.classList.add("show");
+
+        setTimeout(() => {
+          countdown.classList.remove("show");
+        }, 900);
+
+      }, 3000);
+
+      // Start chorus lights
+      setTimeout(() => {
+        startTrafficLoop();
+      }, 4200);
+    }
+  </script>
+
+</body>
+</html>
+
